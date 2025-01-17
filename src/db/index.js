@@ -4,7 +4,9 @@ import dotenv from "dotenv";
 import { DB_NAME } from "../constants.js";
 
 const app = express();
-dotenv.config();
+dotenv.config({
+  path: "./.env",
+});
 
 const connectDB = async () => {
   try {
