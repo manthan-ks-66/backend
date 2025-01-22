@@ -188,7 +188,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Unauthorized request");
   }
   try {
-    // check the incoming refresh token matches with the cookie refresh token through jwt verify
+    // check the incoming refresh token matches with the cookie refresh token from jwt verify
     const decodedToken = jwt.verify(
       incomingRefreshToken,
       process.env.REFRESH_TOKEN_SECRET
