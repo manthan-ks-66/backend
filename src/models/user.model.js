@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema(
       index: true,
     },
     avatar: {
-      type: String, //cloudinary url
+      type: String, // cloudinary url
       required: true,
     },
     coverImage: {
@@ -57,7 +57,7 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-// Checks if the provided password matches the encrypted password
+// Check if the provided password matches the encrypted password
 userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
@@ -81,9 +81,9 @@ userSchema.methods.generateRefreshToken = function () {
     {
       _id: this._id,
     },
-    process.env.ACCESS_TOKEN_SECRET,
+    process.env.REFRESH_TOKEN_SECRET,
     {
-      expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+      expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
     }
   );
 };

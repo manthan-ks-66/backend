@@ -9,4 +9,5 @@ connectDB()
   })
   .catch((error) => {
     console.log("MongoDB Connection failed\n");
+    console.log(error);
   });
