@@ -210,7 +210,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
       await generateAccessTokenAndRefreshToken(user._id);
 
     // send access token and refresh token to the cookie
-    res
+    return res
       .status(200)
       .cookie("accessToken", accessToken, options)
       .cookie("refreshToken", refreshToken, options)
@@ -226,4 +226,81 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
   }
 });
 
-export { loginUser, registerUser, logoutUser, refreshAccessToken };
+// update user password:
+// ALGORITHM
+
+// get old & new passwords from req.body
+// check if passwords exists
+// check if user password is correct
+// check if new password matches with confirm password
+// update password on db
+// return res
+
+const changeCurrentPassword = asyncHandler(async (req, res) => {
+  const { oldPassword, newPassword, confPassword } = req.body;
+
+  if (!oldPassword || !newPassword || !confPassword) {
+    throw new ApiError(400, "all fields are required");
+  }
+
+  // db call:
+  const user = await User.findById(req.user?._id);
+  const isPasswordValid = await user.isPasswordCorrect(oldPassword);
+
+  if (!isPasswordValid) {
+    throw new ApiError(400, "Invalid password");
+  }
+
+  if (!(newPassword === confPassword)) {
+    throw new ApiError(400, "please enter matching password");
+  }
+
+  user.password = newPassword;
+  await user.save({ validateBeforeSave: true });
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "password changed successfully", {}));
+});
+
+// change user details
+const updateAccountDetails = asyncHandler(async (req, res) => {
+  //  ALGORITHM:
+
+  // get updation details from req.body
+  // update the user details from mongoose findByIdAndUpdate
+  const { fullName, email, username } = req.body;
+
+  const user = await User.findByIdAndUpdate(
+    req.user?._id,
+    {
+      $set: {
+        username: username,
+        email: email,
+        fullName: fullName,
+      },
+    },
+    {
+      new: true,
+    }
+  ).select("-password");
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "user details updated successfully", user));
+});
+
+// update avatar
+const changeUserAvatar = asyncHandler(async (req, res) => {
+  // ALGORITHM:
+});
+
+export {
+  loginUser,
+  registerUser,
+  logoutUser,
+  refreshAccessToken,
+  changeCurrentPassword,
+  updateAccountDetails,
+  changeUserAvatar,
+};
