@@ -14,7 +14,7 @@ import { verifyJWT } from "../middlewares/auth.middleware.js";
 import {
   deleteOldAvatar,
   deleteOldCoverImage,
-} from "../middlewares/deleteOldFiles.js";
+} from "../middlewares/deleteOldFiles.middleware.js";
 
 const router = Router();
 
@@ -41,7 +41,7 @@ router.route("/login").post(loginUser);
 // secured routes
 router.route("/logout").post(verifyJWT, logoutUser);
 router.route("/refresh-token").post(verifyJWT, refreshAccessToken);
-router.route("/change-account-details", verifyJWT, updateAccountDetails);
+router.route("/change-account-details").post(verifyJWT, updateAccountDetails);
 router.route("/change-avatar").post(
   upload.fields([
     {
@@ -56,6 +56,8 @@ router.route("/change-avatar").post(
 router
   .route("/change-cover-image")
   .post(verifyJWT, deleteOldCoverImage, changeCoverImage);
-router.route("/change-password", verifyJWT, changeCurrentPassword);
+
+// change password
+router.route("/change-password").post(verifyJWT, changeCurrentPassword);
 
 export default router;

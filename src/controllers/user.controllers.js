@@ -264,7 +264,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "password changed successfully", {}));
 });
 
-// change user details
+// change user account details
 const updateAccountDetails = asyncHandler(async (req, res) => {
   //  ALGO: update user details
 
@@ -288,7 +288,7 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
     {
       new: true,
     }
-  ).select("-password");
+  ).select("-password -refreshToken");
 
   return res
     .status(200)
@@ -298,7 +298,6 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
 // update avatar
 const changeUserAvatar = asyncHandler(async (req, res) => {
   const avatarLocalPath = req.files.avatar[0].path;
-  console.log(req.files);
   console.log(avatarLocalPath);
 
   if (!avatarLocalPath) {
@@ -328,7 +327,7 @@ const changeUserAvatar = asyncHandler(async (req, res) => {
 
 // change user cover image:
 const changeCoverImage = asyncHandler(async (req, res) => {
-  const coverImageLocalPath = req.file?.path;
+  const coverImageLocalPath = req.files.avatar[0].path;
 
   if (!coverImageLocalPath) {
     throw new ApiError(400, "cover image file is missing");
@@ -348,7 +347,7 @@ const changeCoverImage = asyncHandler(async (req, res) => {
       },
     },
     { new: true }
-  ).select("-password");
+  ).select("-password -refreshToken");
 
   res
     .status(200)
