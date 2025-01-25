@@ -9,12 +9,12 @@ export const verifyJWT = async (req, _, next) => {
       req.header("Authorization")?.replace("Bearer ", "");
 
     if (!token) {
-      throw new ApiError(401, "Token is invalid");
+      throw new ApiError(401, "Invalid token: Unauthorized");
     }
 
     const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
-    const user = User.findById(decodedToken?._id).select(
+    const user = await User.findById(decodedToken?._id).select(
       "-password -refreshToken"
     );
 
@@ -25,6 +25,7 @@ export const verifyJWT = async (req, _, next) => {
     req.user = user;
     next();
   } catch (error) {
-    throw new ApiError(401, "Something went wrong");
+    console.log(error);
+    throw new ApiError(401, error.message || "Something went wrong");
   }
 };

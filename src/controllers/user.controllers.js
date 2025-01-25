@@ -29,8 +29,9 @@ const generateAccessTokenAndRefreshToken = async (userId) => {
   }
 };
 
+// register user: (sign up)
 const registerUser = asyncHandler(async (req, res) => {
-  // ALGORITHM: register user
+  // ALGO: register user
   // 1. get user details from frontend
   const { email, username, fullName, password } = req.body;
   console.log("req.body: \n", req.body);
@@ -102,8 +103,9 @@ const registerUser = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "User registered successfully", createdUser));
 });
 
+// login user:
 const loginUser = asyncHandler(async (req, res) => {
-  // ALGORITHM: login user
+  // ALGO: login user
   // get user details from req.body
   const { username, password } = req.body;
   console.log(username, password);
@@ -177,7 +179,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 // end point for refreshing access token to keep user authenticated
 const refreshAccessToken = asyncHandler(async (req, res) => {
-  // ALGORITHM: refresh the access token
+  // ALGO: refresh the access token
 
   // get refresh token from the cookies
   const incomingRefreshToken =
@@ -227,16 +229,15 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 });
 
 // update user password:
-// ALGORITHM
-
-// get old & new passwords from req.body
-// check if passwords exists
-// check if user password is correct
-// check if new password matches with confirm password
-// update password on db
-// return res
-
 const changeCurrentPassword = asyncHandler(async (req, res) => {
+  // ALGO: change password
+
+  // get old & new passwords from req.body
+  // check if passwords exists
+  // check if user password is correct
+  // check if new password matches with confirm password
+  // update password on db
+  // return res
   const { oldPassword, newPassword, confPassword } = req.body;
 
   if (!oldPassword || !newPassword || !confPassword) {
@@ -265,11 +266,15 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 
 // change user details
 const updateAccountDetails = asyncHandler(async (req, res) => {
-  //  ALGORITHM:
+  //  ALGO: update user details
 
   // get updation details from req.body
   // update the user details from mongoose findByIdAndUpdate
   const { fullName, email, username } = req.body;
+
+  if (!fullName || !email || !username) {
+    throw new ApiError(400, "all fields are required");
+  }
 
   const user = await User.findByIdAndUpdate(
     req.user?._id,
@@ -292,7 +297,62 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
 
 // update avatar
 const changeUserAvatar = asyncHandler(async (req, res) => {
-  // ALGORITHM:
+  const avatarLocalPath = req.files.avatar[0].path;
+  console.log(req.files);
+  console.log(avatarLocalPath);
+
+  if (!avatarLocalPath) {
+    throw new ApiError(400, "Avatar file is missing");
+  }
+
+  const avatar = await uploadOnCloudinary(avatarLocalPath);
+
+  if (!avatar.url) {
+    throw new ApiError(400, "Error while uploading the avatar");
+  }
+
+  const user = await User.findByIdAndUpdate(
+    req.user?._id,
+    {
+      $set: {
+        avatar: avatar.url,
+      },
+    },
+    { new: true }
+  ).select("-password");
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, "Avatar updated successfully", user));
+});
+
+// change user cover image:
+const changeCoverImage = asyncHandler(async (req, res) => {
+  const coverImageLocalPath = req.file?.path;
+
+  if (!coverImageLocalPath) {
+    throw new ApiError(400, "cover image file is missing");
+  }
+
+  const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+
+  if (!coverImage.url) {
+    throw new ApiError(400, "Error while uploading the cover image");
+  }
+
+  const user = await User.findByIdAndUpdate(
+    req.user?._id,
+    {
+      $set: {
+        coverImage: coverImage.url,
+      },
+    },
+    { new: true }
+  ).select("-password");
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, "cover image updated successfully", user));
 });
 
 export {
@@ -303,4 +363,5 @@ export {
   changeCurrentPassword,
   updateAccountDetails,
   changeUserAvatar,
+  changeCoverImage,
 };

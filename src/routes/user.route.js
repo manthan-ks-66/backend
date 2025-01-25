@@ -3,10 +3,18 @@ import {
   logoutUser,
   registerUser,
   refreshAccessToken,
+  updateAccountDetails,
+  changeUserAvatar,
+  changeCoverImage,
+  changeCurrentPassword,
 } from "../controllers/user.controllers.js";
 import { Router } from "express";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
+import {
+  deleteOldAvatar,
+  deleteOldCoverImage,
+} from "../middlewares/deleteOldFiles.js";
 
 const router = Router();
 
@@ -32,6 +40,22 @@ router.route("/login").post(loginUser);
 
 // secured routes
 router.route("/logout").post(verifyJWT, logoutUser);
-router.route("/refresh-token").post(refreshAccessToken);
+router.route("/refresh-token").post(verifyJWT, refreshAccessToken);
+router.route("/change-account-details", verifyJWT, updateAccountDetails);
+router.route("/change-avatar").post(
+  upload.fields([
+    {
+      name: "avatar",
+      maxCount: 1,
+    },
+  ]),
+  verifyJWT,
+  deleteOldAvatar,
+  changeUserAvatar
+);
+router
+  .route("/change-cover-image")
+  .post(verifyJWT, deleteOldCoverImage, changeCoverImage);
+router.route("/change-password", verifyJWT, changeCurrentPassword);
 
 export default router;
