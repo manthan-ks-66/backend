@@ -354,6 +354,84 @@ const changeCoverImage = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "cover image updated successfully", user));
 });
 
+const getUserChannelProfile = asyncHandler(async (req, res) => {
+  // ALGO: get user channel profile using aggregate pipleline
+  // get username from req.params
+  // check if username exists
+  // first pipeline: match with username
+  // second pipeline: lookup to subscription schema for subscriber count
+  // third pipeline: lookup to subscription schema for subscribedToCount
+  // fourth pipeline: addFields subscribersCount and subscribedToCount and isSubscribed
+  // fifth pipeline: project the required fields
+
+  const { username } = req.params;
+
+  if (!username) {
+    throw new ApiError(400, "username does not exist");
+  }
+
+  const channel = await User.aggregate([
+    {
+      $match: username,
+    },
+    {
+      $lookup: {
+        from: "subscriptions",
+        localField: "_id",
+        foreignField: "channel",
+        as: "subscribers",
+      },
+    },
+    {
+      $lookup: {
+        from: "subscriptions",
+        localField: "_id",
+        foreignField: "subscriber",
+        as: "subscribedTo",
+      },
+    },
+    {
+      $addFields: {
+        subscribersCount: {
+          $size: "$subscribers",
+        },
+        subscribedToCount: {
+          $size: "$subscribedTo",
+        },
+        isSubscribed: {
+          $cond: {
+            if: { $in: [req.user._id, "$subscribers.subscriber"] },
+            then: true,
+            else: false,
+          },
+        },
+      },
+    },
+    {
+      $project: {
+        username: 1,
+        email: 1,
+        fullName: 1,
+        avatar: 1,
+        coverImage: 1,
+        subscribersCount: 1,
+        subscribedToCount: 1,
+        isSubscribed: 1,
+      },
+    },
+  ]);
+
+  if (!channel) {
+    throw new ApiError(404, "channel not found");
+  }
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(200, "channel profile fetched successfully", channel)
+    );
+});
+
 export {
   loginUser,
   registerUser,
