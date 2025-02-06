@@ -432,6 +432,71 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
     );
 });
 
+const getUserWatchHistory = asyncHandler(async (req, res) => {
+  /* ALGO: get user watch history
+   * first pipeline: match with user id
+   *  second pipeline: lookup to video schema as watchHistory
+   *  third - sub pipeline: lookup to user schema as owner 
+              - sub pipeline: project for owner fullName, username, avatar
+   * fourth pipeline: addFields owner */
+
+  const user = await User.aggregate([
+    {
+      $match: {
+        _id: mongoose.Types.ObjectId(req.user._id),
+      },
+    },
+    {
+      $lookup: {
+        from: "videos",
+        localField: "watchHistory",
+        foreignField: "_id",
+        as: "watchHistory",
+        pipeline: [
+          {
+            $lookup: {
+              from: "users",
+              localField: "owner",
+              foreignField: "_id",
+              as: "owner",
+              pipeline: [
+                {
+                  $project: {
+                    fullName: 1,
+                    username: 1,
+                    avatar: 1,
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      $addFields: {
+        owner: {
+          $first: "$owner",
+        },
+      },
+    },
+  ]);
+
+  if (!user) {
+    throw new ApiError(400, "user not found");
+  }
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        "watch history fetched successfully",
+        user[0].watchHistory
+      )
+    );
+});
+
 export {
   loginUser,
   registerUser,
@@ -441,4 +506,6 @@ export {
   updateAccountDetails,
   changeUserAvatar,
   changeCoverImage,
+  getUserChannelProfile,
+  getUserWatchHistory,
 };
