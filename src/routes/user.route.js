@@ -42,22 +42,16 @@ router.route("/login").post(loginUser);
 router.route("/logout").post(verifyJWT, logoutUser);
 router.route("/refresh-token").post(verifyJWT, refreshAccessToken);
 router.route("/change-account-details").post(verifyJWT, updateAccountDetails);
-router.route("/change-avatar").post(
-  upload.fields([
-    {
-      name: "avatar",
-      maxCount: 1,
-    },
-  ]),
-  verifyJWT,
-  deleteOldAvatar,
-  changeUserAvatar
-);
+router
+  .route("/change-avatar")
+  .patch(upload.single("avatar"), verifyJWT, deleteOldAvatar, changeUserAvatar);
 router
   .route("/change-cover-image")
-  .post(verifyJWT, deleteOldCoverImage, changeCoverImage);
+  .patch(verifyJWT, deleteOldCoverImage, changeCoverImage);
 
 // change password
-router.route("/change-password").post(verifyJWT, changeCurrentPassword);
+router
+  .route("/change-password")
+  .post(upload.single("coverImage"), verifyJWT, changeCurrentPassword);
 
 export default router;
