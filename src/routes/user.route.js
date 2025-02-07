@@ -41,7 +41,7 @@ router.route("/login").post(loginUser);
 // secured routes
 router.route("/logout").post(verifyJWT, logoutUser);
 router.route("/refresh-token").post(verifyJWT, refreshAccessToken);
-router.route("/change-account-details").post(verifyJWT, updateAccountDetails);
+router.route("/change-account-details").patch(verifyJWT, updateAccountDetails);
 router
   .route("/change-avatar")
   .patch(upload.single("avatar"), verifyJWT, deleteOldAvatar, changeUserAvatar);
@@ -52,6 +52,6 @@ router
 // change password
 router
   .route("/change-password")
-  .post(upload.single("coverImage"), verifyJWT, changeCurrentPassword);
+  .patch(upload.single("coverImage"), verifyJWT, changeCurrentPassword);
 
 export default router;
