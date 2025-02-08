@@ -357,14 +357,14 @@ const changeCoverImage = asyncHandler(async (req, res) => {
 });
 
 const getUserChannelProfile = asyncHandler(async (req, res) => {
-  // ALGO: get user channel profile using aggregate pipleline
-  // get username from req.params
-  // check if username exists
-  // first pipeline: match with username
-  // second pipeline: lookup to subscription schema for subscriber count
-  // third pipeline: lookup to subscription schema for subscribedToCount
-  // fourth pipeline: addFields subscribersCount and subscribedToCount and isSubscribed
-  // fifth pipeline: project the required fields
+  /* ALGO: get user channel profile using aggregate pipleline
+   * get username from req.params
+   * check if username exists
+   * first pipeline: match with username
+   * second pipeline: lookup to subscription schema for subscriber count
+   * third pipeline: lookup to subscription schema for subscribedToCount
+   * fourth pipeline: addFields subscribersCount and subscribedToCount and isSubscribed
+   * fifth pipeline: project the required fields */
 
   const { username } = req.params;
 

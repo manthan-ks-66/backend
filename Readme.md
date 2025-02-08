@@ -1,5 +1,3 @@
-# backend with chai code
+# backend series
 
 this is a backend series project
-
-[Model link](https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj)
