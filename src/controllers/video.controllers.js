@@ -16,8 +16,8 @@ const uploadVideo = asyncHandler(async (req, res) => {
    * check if any of the video details are missing
    * get the cloudinary url for vidoe file and thumbnail
    * check if the cloudinary url exist
-   * create video object in db
-   * check if object created ?
+   * create video object
+   * check if object created
    * return res
    */
 
