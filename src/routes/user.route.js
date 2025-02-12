@@ -7,6 +7,8 @@ import {
   changeUserAvatar,
   changeCoverImage,
   changeCurrentPassword,
+  getUserChannelProfile,
+  getUserWatchHistory,
 } from "../controllers/user.controllers.js";
 import { Router } from "express";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -53,5 +55,8 @@ router
 router
   .route("/change-password")
   .patch(upload.single("coverImage"), verifyJWT, changeCurrentPassword);
+
+router.route("/channel/:username").get(verifyJWT, getUserChannelProfile);
+router.route("/watch-history").get(verifyJWT, getUserWatchHistory);
 
 export default router;

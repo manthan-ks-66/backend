@@ -11,7 +11,6 @@ const options = {
   secured: true,
 };
 
-// generates access and refresh tokens for authentication
 const generateAccessTokenAndRefreshToken = async (userId) => {
   try {
     const user = await User.findById(userId);
@@ -29,7 +28,6 @@ const generateAccessTokenAndRefreshToken = async (userId) => {
   }
 };
 
-// register user: (sign up)
 const registerUser = asyncHandler(async (req, res) => {
   // ALGO: register user
   // 1. get user details from frontend
@@ -230,7 +228,6 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
   }
 });
 
-// update user password:
 const changeCurrentPassword = asyncHandler(async (req, res) => {
   // ALGO: change password
 
@@ -266,7 +263,6 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "password changed successfully", {}));
 });
 
-// change user account details
 const updateAccountDetails = asyncHandler(async (req, res) => {
   //  ALGO: update user details
 
@@ -297,7 +293,6 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "user details updated successfully", user));
 });
 
-// update avatar
 const changeUserAvatar = asyncHandler(async (req, res) => {
   const avatarLocalPath = req.files.avatar[0].path;
   console.log(avatarLocalPath);
@@ -327,7 +322,6 @@ const changeUserAvatar = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "Avatar updated successfully", user));
 });
 
-// change user cover image:
 const changeCoverImage = asyncHandler(async (req, res) => {
   const coverImageLocalPath = req.files.coverImage[0].path;
 
@@ -438,9 +432,9 @@ const getUserWatchHistory = asyncHandler(async (req, res) => {
   /* ALGO: get user watch history
    * first pipeline: match with user id
    *  second pipeline: lookup to video schema as watchHistory
-   *  third - sub pipeline: lookup to user schema as owner 
-              - sub pipeline: project for owner fullName, username, avatar
-   * fourth pipeline: addFields owner */
+   *  - sub pipeline: lookup to user schema as owner 
+      - sub pipeline: project for owner fullName, username, avatar
+   * third pipeline: addFields owner */
 
   const user = await User.aggregate([
     {
