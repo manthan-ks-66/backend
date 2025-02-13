@@ -352,7 +352,7 @@ const changeCoverImage = asyncHandler(async (req, res) => {
 
 const getUserChannelProfile = asyncHandler(async (req, res) => {
   /* ALGO: get user channel profile using aggregate pipleline
-   * get username from req.params
+   * get username from req.params (/:username)
    * check if username exists
    * first pipeline: match with username
    * second pipeline: lookup to subscription schema for subscriber count

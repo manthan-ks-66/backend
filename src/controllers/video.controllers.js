@@ -3,7 +3,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import { Video } from "../models/video.model.js";
-import { mongoose } from "mongoose";
+import mongoose, { isValidObjectId } from "mongoose";
 
 // changes the date in mm:ss format
 function formatDuration(duration) {
@@ -12,7 +12,7 @@ function formatDuration(duration) {
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
 
-const uploadVideo = asyncHandler(async (req, res) => {
+const publishVideo = asyncHandler(async (req, res) => {
   /* ALGO: upload user video
    * get video details from req.body and req.files
    * check if any of the video details are missing
@@ -177,17 +177,39 @@ const updateVideo = asyncHandler(async (req, res) => {
 });
 
 const togglePublishStatus = asyncHandler(async (req, res) => {
-  /* ALGO: toggle the isPublished field of video as true or falsse
+  /* ALGO: toggle the isPublished field of video as true or false
    * get video id from req.params
-   *  */
+   * find video by id and toggle isPublished
+   * return res */
+
+  const { videoId } = req.params;
+
+  if (!videoId) {
+    throw new ApiError(400, "video id is missing");
+  }
+
+  const video = await Video.findByIdAndUpdate(videoId, {
+    $set: {
+      isPublished: !video.isPublished,
+    },
+  });
+
+  return res.status(200).json(new ApiResponse(200, "video toggled", {}));
 });
 
 const getAllVideos = asyncHandler(async (req, res) => {
-  /* ALGO: get all videos */
+  const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query;
+  // TODO: get all videos based on query, sort, pagination
+
+  if (!isValidObjectId(userId)) {
+    throw new ApiError(400, "Invalid user");
+  }
+
+  const video = await Video.find();
 });
 
 export {
-  uploadVideo,
+  publishVideo,
   getAllVideos,
   deleteVideo,
   getVideoById,
