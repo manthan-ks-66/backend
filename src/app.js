@@ -19,8 +19,8 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 // import routes
-import userRouter from "./routes/user.route.js";
-import videoRouter from "./routes/video.route.js";
+import userRouter from "./routes/user.routes.js";
+import videoRouter from "./routes/video.routes.js";
 
 // routes declaration
 app.use("/api/v1/users", userRouter);

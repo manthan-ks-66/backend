@@ -12,6 +12,40 @@ function formatDuration(duration) {
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
 
+const getAllVideos = asyncHandler(async (req, res) => {
+  const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query;
+  // TODO: get all videos based on query, sort, pagination
+
+  if (userId && !isValidObjectId(userId)) {
+    throw new ApiError(400, "Invalid user id");
+  }
+
+  const filter = {};
+
+  if (query && userId) {
+    filter.title = { $regex: query, $options: "i" };
+    filter.userId = userId;
+  }
+
+  let sortOptions = {};
+  if (sort) {
+    sortOptions[sortBy] = sortType === "desc" ? -1 : 1;
+  }
+
+  const videos = await Video.find(filter)
+    .sort(sortOptions)
+    .skip((page - 1) * limit)
+    .limit(Number(limit));
+
+  if (!videos) {
+    throw new ApiError(500, "Internal server error");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "videos fetched successfully", videos));
+});
+
 const publishVideo = asyncHandler(async (req, res) => {
   /* ALGO: upload user video
    * get video details from req.body and req.files
@@ -34,7 +68,6 @@ const publishVideo = asyncHandler(async (req, res) => {
   if (!videoFileLocalPath || !thumbnailLocalPath) {
     throw new ApiError(400, "video file or thumbnail is missing");
   }
-  console.log(videoFileLocalPath, thumbnailLocalPath);
 
   const videoFile = await uploadOnCloudinary(videoFileLocalPath);
   const thumbnail = await uploadOnCloudinary(thumbnailLocalPath);
@@ -47,18 +80,18 @@ const publishVideo = asyncHandler(async (req, res) => {
     videoFile: videoFile.url,
     thumbnail: thumbnail.url,
     owner: req.user._id,
-    title,
-    description,
+    title: title,
+    description: description,
     duration: formatDuration(videoFile.duration),
   });
 
   if (!video) {
-    throw new ApiError(500, "internal server error please try again");
+    throw new ApiError(500, "Internal server error please try again");
   }
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "video uploaded successfully", video));
+    .json(new ApiResponse(200, "Video published successfully", video));
 });
 
 const deleteVideo = asyncHandler(async (req, res) => {
@@ -82,7 +115,7 @@ const deleteVideo = asyncHandler(async (req, res) => {
 });
 
 const getVideoById = asyncHandler(async (req, res) => {
-  /* ALGO: get video using id
+  /* ALGO: get video from id
    * get video id from req.params
    * check if video id exists
    * use mongodb aggregation pipeline to get video along with owner details
@@ -108,6 +141,7 @@ const getVideoById = asyncHandler(async (req, res) => {
         foreignField: "_id",
         as: "videoOwner",
         pipeline: [
+          // TODO: try $ project outside of $ lookup pipeline
           {
             $project: {
               username: 1,
@@ -195,17 +229,6 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
   });
 
   return res.status(200).json(new ApiResponse(200, "video toggled", {}));
-});
-
-const getAllVideos = asyncHandler(async (req, res) => {
-  const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query;
-  // TODO: get all videos based on query, sort, pagination
-
-  if (!isValidObjectId(userId)) {
-    throw new ApiError(400, "Invalid user");
-  }
-
-  const video = await Video.find();
 });
 
 export {
