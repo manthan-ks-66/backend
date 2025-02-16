@@ -13,7 +13,7 @@ function formatDuration(duration) {
 }
 
 const getAllVideos = asyncHandler(async (req, res) => {
-  const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query;
+  let { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query;
   // get all videos based on query, sort, pagination
 
   if (userId && !isValidObjectId(userId)) {
@@ -28,6 +28,15 @@ const getAllVideos = asyncHandler(async (req, res) => {
   if (sortBy && sortType) {
     sortOptions[sortBy] = sortType === "desc" ? -1 : 1;
   }
+
+  /* NOTE: this approach always includes userId in the filter object whether its null or  
+  filled and the mongodb find() method accepts object that has value to fetch data and if
+  there is no value it gives an error better to use spread operator with logical && 
+
+   const filter = {
+    title: { $regex: query, $options: "i" },
+    userId: userId ? userId : null,
+  } */
 
   const filter = {
     title: { $regex: query, $options: "i" },
@@ -44,6 +53,10 @@ const getAllVideos = asyncHandler(async (req, res) => {
   if (!videos) {
     throw new ApiError(500, "Internal server error: data fetch failed");
   }
+  console.log(page);
+
+  let nextPage = `/videos/get-all-videos?page=${Number(page) + 1}&limit=${limit}&query=${query}&sortBy=${sortBy}&sortType=${sortType}`;
+  let prevPage = `/videos/get-all-videos?page=${Number(page) - 1}&limit=${limit}&query=${query}&sortBy=${sortBy}&sortType=${sortType}`;
 
   const data = {
     videos,
@@ -51,12 +64,8 @@ const getAllVideos = asyncHandler(async (req, res) => {
     page: Number(page),
     hasNextPage: page * limit < totalVideos,
     hasPrevPage: page > 1,
-    nextPage: nextPage
-      ? `/api/v1/videos?page=${page + 1}&limit=${limit}&query=${query}&sortBy=${sortBy}&sortType=${sortType}`
-      : null,
-    prevPage: prevPage
-      ? `/api/v1/videos?page=${page - 1}&limit=${limit}&query=${query}&sortBy=${sortBy}&sortType=${sortType}`
-      : null,
+    nextPage: page * limit < totalVideos ? nextPage : null,
+    prevPage: page > 1 ? prevPage : null,
   };
 
   return res
