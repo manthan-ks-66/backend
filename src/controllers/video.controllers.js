@@ -53,7 +53,6 @@ const getAllVideos = asyncHandler(async (req, res) => {
   if (!videos) {
     throw new ApiError(500, "Internal server error: data fetch failed");
   }
-  console.log(page);
 
   let nextPage = `/videos/get-all-videos?page=${Number(page) + 1}&limit=${limit}&query=${query}&sortBy=${sortBy}&sortType=${sortType}`;
   let prevPage = `/videos/get-all-videos?page=${Number(page) - 1}&limit=${limit}&query=${query}&sortBy=${sortBy}&sortType=${sortType}`;
