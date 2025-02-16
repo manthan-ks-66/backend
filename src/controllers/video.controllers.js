@@ -14,23 +14,27 @@ function formatDuration(duration) {
 
 const getAllVideos = asyncHandler(async (req, res) => {
   const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query;
-  // TODO: get all videos based on query, sort, pagination
+  // get all videos based on query, sort, pagination
 
   if (userId && !isValidObjectId(userId)) {
     throw new ApiError(400, "Invalid user id");
   }
 
-  const filter = {};
-
-  if (query && userId) {
-    filter.title = { $regex: query, $options: "i" };
-    filter.userId = userId;
+  if (!query) {
+    throw new ApiError(400, "query is required to filter the videos");
   }
 
-  let sortOptions = {};
-  if (sort) {
+  const sortOptions = {};
+  if (sortBy && sortType) {
     sortOptions[sortBy] = sortType === "desc" ? -1 : 1;
   }
+
+  const filter = {
+    title: { $regex: query, $options: "i" },
+    ...(userId && { owner: userId }),
+  };
+
+  const totalVideos = await Video.countDocuments(filter);
 
   const videos = await Video.find(filter)
     .sort(sortOptions)
@@ -38,12 +42,26 @@ const getAllVideos = asyncHandler(async (req, res) => {
     .limit(Number(limit));
 
   if (!videos) {
-    throw new ApiError(500, "Internal server error");
+    throw new ApiError(500, "Internal server error: data fetch failed");
   }
+
+  const data = {
+    videos,
+    totalVideos,
+    page: Number(page),
+    hasNextPage: page * limit < totalVideos,
+    hasPrevPage: page > 1,
+    nextPage: nextPage
+      ? `/api/v1/videos?page=${page + 1}&limit=${limit}&query=${query}&sortBy=${sortBy}&sortType=${sortType}`
+      : null,
+    prevPage: prevPage
+      ? `/api/v1/videos?page=${page - 1}&limit=${limit}&query=${query}&sortBy=${sortBy}&sortType=${sortType}`
+      : null,
+  };
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "videos fetched successfully", videos));
+    .json(new ApiResponse(200, "videos fetched successfully", data));
 });
 
 const publishVideo = asyncHandler(async (req, res) => {
