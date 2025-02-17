@@ -13,7 +13,7 @@ function formatDuration(duration) {
 }
 
 const getAllVideos = asyncHandler(async (req, res) => {
-  let { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query;
+  const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query;
   // get all videos based on query, sort, pagination
 
   if (userId && !isValidObjectId(userId)) {
@@ -29,15 +29,6 @@ const getAllVideos = asyncHandler(async (req, res) => {
     sortOptions[sortBy] = sortType === "desc" ? -1 : 1;
   }
 
-  /* NOTE: this approach always includes userId in the filter object whether its null or  
-  filled and the mongodb find() method accepts object that has value to fetch data and if
-  there is no value it gives an error better to use spread operator with logical && 
-
-   const filter = {
-    title: { $regex: query, $options: "i" },
-    userId: userId ? userId : null,
-  } */
-
   const filter = {
     title: { $regex: query, $options: "i" },
     ...(userId && { owner: userId }),
@@ -50,12 +41,17 @@ const getAllVideos = asyncHandler(async (req, res) => {
     .skip((page - 1) * limit)
     .limit(Number(limit));
 
-  if (!videos) {
-    throw new ApiError(500, "Internal server error: data fetch failed");
+  if (videos.length === 0) {
+    throw new ApiError(400, "No videos found");
   }
 
-  let nextPage = `/videos/get-all-videos?page=${Number(page) + 1}&limit=${limit}&query=${query}&sortBy=${sortBy}&sortType=${sortType}`;
-  let prevPage = `/videos/get-all-videos?page=${Number(page) - 1}&limit=${limit}&query=${query}&sortBy=${sortBy}&sortType=${sortType}`;
+  const apiBaseUrl = "/videos/get-all-videos?";
+  const apiNextPage = `page=${Number(page) + 1}&limit=${limit}&query=${query}`;
+  const apiPrevPage = `page=${Number(page) - 1}&limit=${limit}&query=${query}`;
+  const userIdParam = userId ? `&userId=${userId}` : "";
+
+  const nextPage = `${apiBaseUrl}${apiNextPage}&sortBy=${sortBy}&sortType=${sortType}${userIdParam}`;
+  const prevPage = `${apiBaseUrl}${apiPrevPage}&sortBy=${sortBy}&sortType=${sortType}${userIdParam}`;
 
   const data = {
     videos,
@@ -73,15 +69,6 @@ const getAllVideos = asyncHandler(async (req, res) => {
 });
 
 const publishVideo = asyncHandler(async (req, res) => {
-  /* ALGO: upload user video
-   * get video details from req.body and req.files
-   * check if any of the video details are missing
-   * get the cloudinary url for video file and thumbnail
-   * check if the cloudinary url exist
-   * create video object
-   * check if object created
-   * return res */
-
   const { title, description } = req.body;
 
   const videoFileLocalPath = req.files?.videoFile[0]?.path;
@@ -265,3 +252,12 @@ export {
   updateVideo,
   togglePublishStatus,
 };
+
+/* NOTE: this approach always includes userId in the filter object whether its null or  
+  filled and the mongodb find() method accepts object that has value to fetch data and if
+  there is no value it gives an error better to use spread operator with logical && 
+
+   const filter = {
+    title: { $regex: query, $options: "i" },
+    userId: userId ? userId : null,
+  } */
