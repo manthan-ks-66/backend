@@ -27,8 +27,10 @@ router.route("/upload").post(
   publishVideo
 );
 
-router.route("/channel/delete-video/:videoId").get(verifyJWT, deleteVideo);
+router.route("/channel/delete-video/:videoId").delete(verifyJWT, deleteVideo);
+
 router.route("/:videoId").get(getVideoById);
+
 router
   .route("/update/:videoId")
   .patch(verifyJWT, upload.single("thumbnail"), updateVideo);

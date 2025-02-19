@@ -2,7 +2,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import { Playlist } from "../models/playlist.model.js";
-import { isValidObjectId } from "mongoose";
+import { mongoose, isValidObjectId } from "mongoose";
 
 const createPlaylist = asyncHandler(async (req, res) => {
   const { name, description } = req.body;
@@ -21,6 +21,10 @@ const createPlaylist = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponse(200, "playlist created successfully", playlist));
+});
+
+const getUserPlaylist = asyncHandler(async (req, res) => {
+  //
 });
 
 // create playlist from already uploaded videos by selecting multiple videos and creating new playlist
@@ -51,6 +55,7 @@ const createPlaylistFromVideos = asyncHandler(async (req, res) => {
 });
 
 const addVideoToPlaylist = asyncHandler(async (req, res) => {
+  // add single video to the playlist
   const { playlistId, videoId } = req.params;
 
   if (
@@ -61,11 +66,16 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Invalid id");
   }
 
-  const updatedPlaylist = await Playlist.findByIdAndUpdate(playlistId, {
-    $set: {
-      videos: videoId,
+  const updatedPlaylist = await Playlist.updateOne(
+    {
+      _id: new mongoose.Types.ObjectId(playlistId),
     },
-  });
+    {
+      $push: {
+        videos: new mongoose.Types.ObjectId(videoId),
+      },
+    }
+  );
 
   return res
     .status(200)
@@ -90,9 +100,85 @@ const getPlaylistById = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "Playlist fetched successfully", playlist));
 });
 
+const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
+  // remove single video from the playlist
+  const { playlistId, videoId } = req.params;
+
+  if (!(isValidObjectId(playlistId) && isValidObjectId(videoId))) {
+    throw new ApiError(400, "Invalid Id");
+  }
+
+  const updatedPlaylist = await Playlist.updateOne(
+    {
+      _id: new mongoose.Types.ObjectId(playlistId),
+    },
+    {
+      $pull: {
+        videos: new mongoose.Types.ObjectId(videoId),
+      },
+    }
+  );
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(200, "Video removed from the playlist", updatedPlaylist)
+    );
+});
+
+const deletePlaylist = asyncHandler(async (req, res) => {
+  const { playlistId } = req.params;
+
+  if (!isValidObjectId(playlistId)) {
+    throw new ApiError(400, "Invalid playlist id");
+  }
+
+  await Playlist.findByIdAndDelete(playlistId);
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "Playlist deleted successfully", {}));
+});
+
+const updatePlaylist = asyncHandler(async (req, res) => {
+  const { playlistId } = req.params;
+  const { name, description } = req.body;
+
+  if (!name || !description) {
+    throw new ApiError(400, "Name and description is required");
+  }
+
+  if (!isValidObjectId(playlistId)) {
+    throw new ApiError(400, "Invalid playlist id");
+  }
+
+  const updatedPlaylist = await Playlist.findByIdAndUpdate(
+    playlistId,
+    {
+      $set: {
+        name: name,
+        description: description,
+      },
+    },
+    {
+      new: true,
+    }
+  );
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(200, "Playlist updated successfully", updatedPlaylist)
+    );
+});
+
 export {
   createPlaylist,
-  createPlaylistFromVideos,
-  addVideoToPlaylist,
+  deletePlaylist,
+  updatePlaylist,
+  getUserPlaylist,
   getPlaylistById,
+  addVideoToPlaylist,
+  removeVideoFromPlaylist,
+  createPlaylistFromVideos,
 };
