@@ -108,12 +108,6 @@ const publishVideo = asyncHandler(async (req, res) => {
 });
 
 const deleteVideo = asyncHandler(async (req, res) => {
-  /* ALGO: delete video
-   * get video id from req.params
-   * check if video id exists
-   * mongoose find by id and delete
-   * return res */
-
   const { videoId } = req.params;
 
   if (!videoId) {
@@ -128,13 +122,6 @@ const deleteVideo = asyncHandler(async (req, res) => {
 });
 
 const getVideoById = asyncHandler(async (req, res) => {
-  /* ALGO: get video from id
-   * get video id from req.params
-   * check if video id exists
-   * use mongodb aggregation pipeline to get video along with owner details
-   * check if video response returned by mongoose
-   * return res */
-
   const { videoId } = req.params;
 
   if (!videoId) {
@@ -180,17 +167,6 @@ const getVideoById = asyncHandler(async (req, res) => {
 });
 
 const updateVideo = asyncHandler(async (req, res) => {
-  /* ALGO: update video details title, description, thumbnail
-   * get video id from req.params
-   * check if video id exists
-   * get title, description from req.body
-   * get thumbnail from req.files
-   * check for title, description and thumbnail
-   * upload thumbnail on cloudinary and get the url
-   * check for thumbnail url
-   * update required details using findByIdAndUpdate
-   * return res */
-
   const { videoId } = req.params;
 
   if (!videoId) {
@@ -224,11 +200,6 @@ const updateVideo = asyncHandler(async (req, res) => {
 });
 
 const togglePublishStatus = asyncHandler(async (req, res) => {
-  /* ALGO: toggle the isPublished field of video as true or false
-   * get video id from req.params
-   * find video by id and toggle isPublished
-   * return res */
-
   const { videoId } = req.params;
 
   if (!videoId) {
@@ -253,11 +224,13 @@ export {
   togglePublishStatus,
 };
 
-/* NOTE: this approach always includes userId in the filter object whether its null or  
+/*const filter = {
+  title: { $regex: query, $options: "i" },
+  userId: userId ? userId : null,
+
+  NOTE: this approach always includes userId in the filter object whether its null or  
   filled and the mongodb find() method accepts object that has value to fetch data and if
   there is no value it gives an error better to use spread operator with logical && 
 
-   const filter = {
-    title: { $regex: query, $options: "i" },
-    userId: userId ? userId : null,
+
   } */
