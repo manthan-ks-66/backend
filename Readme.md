@@ -1,3 +1,3 @@
 # backend series
 
-this is a backend series project
+this project is the backend of youtube
