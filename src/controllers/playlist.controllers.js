@@ -58,11 +58,7 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
   // add single video to the playlist
   const { playlistId, videoId } = req.params;
 
-  if (
-    !(isValidObjectId(playlistId) && isValidObjectId(videoId)) ||
-    !playlistId ||
-    !videoId
-  ) {
+  if (!(isValidObjectId(playlistId) && isValidObjectId(videoId))) {
     throw new ApiError(400, "Invalid id");
   }
 
@@ -85,7 +81,7 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
 const getPlaylistById = asyncHandler(async (req, res) => {
   const { playlistId } = req.params;
 
-  if (!playlistId || !isValidObjectId(playlistId)) {
+  if (!isValidObjectId(playlistId)) {
     throw new ApiError(400, "Video id is invalid or missing");
   }
 
