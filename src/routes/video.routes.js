@@ -29,10 +29,10 @@ router.route("/upload").post(
 
 router.route("/channel/delete-video/:videoId").delete(verifyJWT, deleteVideo);
 
-router.route("/:videoId").get(getVideoById);
+router.route("/get-video/:videoId").get(getVideoById);
 
 router
-  .route("/update/:videoId")
+  .route("/update-video/:videoId")
   .patch(verifyJWT, upload.single("thumbnail"), updateVideo);
 
 router.route("/toggle-publish/:videoId").patch(verifyJWT, togglePublishStatus);
