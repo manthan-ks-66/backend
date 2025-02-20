@@ -19,8 +19,8 @@ const createPlaylist = asyncHandler(async (req, res) => {
   });
 
   return res
-    .status(200)
-    .json(new ApiResponse(200, "Playlist created successfully", playlist));
+    .status(201)
+    .json(new ApiResponse(201, "Playlist created successfully", playlist));
 });
 
 const getUserPlaylists = asyncHandler(async (req, res) => {
@@ -66,8 +66,8 @@ const createPlaylistFromVideos = asyncHandler(async (req, res) => {
   });
 
   return res
-    .status(200)
-    .json(new ApiResponse(200, "Playlist created successfully", userPlaylist));
+    .status(201)
+    .json(new ApiResponse(201, "Playlist created successfully", userPlaylist));
 });
 
 const addVideoToPlaylist = asyncHandler(async (req, res) => {
@@ -148,8 +148,8 @@ const deletePlaylist = asyncHandler(async (req, res) => {
   await Playlist.findByIdAndDelete(playlistId);
 
   return res
-    .status(200)
-    .json(new ApiResponse(200, "Playlist deleted successfully", {}));
+    .status(204)
+    .json(new ApiResponse(204, "Playlist deleted successfully", {}));
 });
 
 const updatePlaylist = asyncHandler(async (req, res) => {

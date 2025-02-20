@@ -9,8 +9,12 @@ const addComment = asyncHandler(async (req, res) => {
 
   const { content } = req.body;
 
-  if (!(isValidObjectId(videoId) && content)) {
-    throw new ApiError(400, "Invalid id or content is missing");
+  if (!isValidObjectId(videoId)) {
+    throw new ApiError(400, "Invalid video ID");
+  }
+
+  if (!content) {
+    throw new ApiError(400, "Content is missing");
   }
 
   const comment = await Comment.create({
@@ -24,8 +28,8 @@ const addComment = asyncHandler(async (req, res) => {
   }
 
   return res
-    .status(200)
-    .json(new ApiResponse(200, "Comment added successfully", comment));
+    .status(201)
+    .json(new ApiResponse(201, "Comment added successfully", comment));
 });
 
 export { addComment };
