@@ -20,11 +20,27 @@ const createPlaylist = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "playlist created successfully", playlist));
+    .json(new ApiResponse(200, "Playlist created successfully", playlist));
 });
 
-const getUserPlaylist = asyncHandler(async (req, res) => {
-  //
+const getUserPlaylists = asyncHandler(async (req, res) => {
+  const { userId } = req.params;
+
+  if (!isValidObjectId(userId)) {
+    throw new ApiError(400, "Invalid or missing user id");
+  }
+
+  const userPlaylists = await Playlist.find({ owner: userId });
+
+  if (!userPlaylists) {
+    throw new ApiError(400, "No playlists found");
+  }
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(200, "Playlists fetched successfully", userPlaylists)
+    );
 });
 
 // create playlist from already uploaded videos by selecting multiple videos and creating new playlist
@@ -172,8 +188,8 @@ export {
   createPlaylist,
   deletePlaylist,
   updatePlaylist,
-  getUserPlaylist,
   getPlaylistById,
+  getUserPlaylists,
   addVideoToPlaylist,
   removeVideoFromPlaylist,
   createPlaylistFromVideos,

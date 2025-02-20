@@ -4,6 +4,7 @@ import {
   createPlaylist,
   deletePlaylist,
   updatePlaylist,
+  getUserPlaylists,
   getPlaylistById,
   addVideoToPlaylist,
   removeVideoFromPlaylist,
@@ -31,5 +32,7 @@ router
 router.route("/delete-playlist/:playlistId").delete(verifyJWT, deletePlaylist);
 
 router.route("/update-playlist/:playlistId").patch(verifyJWT, updatePlaylist);
+
+router.route("/get-user-playlists/:userId").get(verifyJWT, getUserPlaylists);
 
 export default router;
