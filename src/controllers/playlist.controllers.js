@@ -128,6 +128,9 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
       $pull: {
         videos: new mongoose.Types.ObjectId(videoId),
       },
+    },
+    {
+      new: true,
     }
   );
 

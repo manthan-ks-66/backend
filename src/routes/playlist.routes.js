@@ -10,8 +10,11 @@ import {
   removeVideoFromPlaylist,
   createPlaylistFromVideos,
 } from "../controllers/playlist.controllers.js";
+import { upload } from "../middlewares/multer.middleware.js";
 
 const router = Router();
+
+router.use(upload.none());
 
 router.route("/create-playlist").post(verifyJWT, createPlaylist);
 

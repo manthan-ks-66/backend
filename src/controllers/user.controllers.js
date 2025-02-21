@@ -100,8 +100,6 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
-  // ALGO: login user
-  // get user details from req.body
   const { username, password } = req.body;
   console.log(username, password);
 
@@ -124,7 +122,6 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Invalid user credentials");
   }
 
-  console.log(isPasswordValid);
   // generate access and refresh token
   const { accessToken, refreshToken } =
     await generateAccessTokenAndRefreshToken(user._id);
