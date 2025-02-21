@@ -4,7 +4,6 @@ import asyncHandler from "../utils/asyncHandler.js";
 import { Comment } from "../models/comments.model.js";
 import { isValidObjectId } from "mongoose";
 
-// TODO: postman testing
 const getVideoComments = asyncHandler(async (req, res) => {
   // get all comments for a video
   const { videoId } = req.params;
@@ -15,7 +14,7 @@ const getVideoComments = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Video id is invalid or missing");
   }
 
-  const comments = await Comment.find({ owner: req.user._id })
+  const comments = await Comment.find({ video: videoId })
     .sort({ createdAt: 1 })
     .skip((page - 1) * limit)
     .limit(Number(limit));
@@ -87,4 +86,43 @@ const updateComment = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "Comment updated successfully", updatedComment));
 });
 
-export { addComment, updateComment, getVideoComments };
+const getUserAllComments = asyncHandler(async (req, res) => {
+  const { page = 1, limit = 10 } = req.query;
+
+  const userComments = await Comment.find({ owner: req.user._id })
+    .sort({ createdAt: 1 })
+    .skip((page - 1) * limit)
+    .limit(Number(limit));
+
+  if (userComments?.length === 0) {
+    throw new ApiError(400, "No comments found of your account");
+  }
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(400, "User comments fetched successfully", userComments)
+    );
+});
+
+const deleteComment = asyncHandler(async (req, res) => {
+  const commentId = req.params;
+
+  if (!isValidObjectId(commentId)) {
+    throw new ApiError(400, "Invalid id");
+  }
+
+  await Comment.findByIdAndDelete(commentId);
+
+  return res
+    .status(204)
+    .json(new ApiResponse(204, "Comment deleted successfully", {}));
+});
+
+export {
+  addComment,
+  deleteComment,
+  updateComment,
+  getVideoComments,
+  getUserAllComments,
+};
