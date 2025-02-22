@@ -21,7 +21,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
   }
 
   if (!query) {
-    throw new ApiError(400, "query is required to filter the videos");
+    throw new ApiError(400, "Query is required to filter the videos");
   }
 
   const sortOptions = {};
@@ -65,7 +65,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "videos fetched successfully", data));
+    .json(new ApiResponse(200, "Videos fetched successfully", data));
 });
 
 const publishVideo = asyncHandler(async (req, res) => {
@@ -75,18 +75,18 @@ const publishVideo = asyncHandler(async (req, res) => {
   const thumbnailLocalPath = req.files?.thumbnail[0]?.path;
 
   if (!title || !description) {
-    throw new ApiError(400, "all fields are required");
+    throw new ApiError(400, "All fields are required");
   }
 
   if (!videoFileLocalPath || !thumbnailLocalPath) {
-    throw new ApiError(400, "video file or thumbnail is missing");
+    throw new ApiError(400, "Video file or thumbnail is missing");
   }
 
   const videoFile = await uploadOnCloudinary(videoFileLocalPath);
   const thumbnail = await uploadOnCloudinary(thumbnailLocalPath);
 
   if (!videoFile?.url || !thumbnail?.url) {
-    throw new ApiError(500, "error while uploading the files");
+    throw new ApiError(500, "Error while uploading the files");
   }
 
   const video = await Video.create({
@@ -111,21 +111,21 @@ const deleteVideo = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
 
   if (!videoId) {
-    throw new ApiError(400, "video id is missing");
+    throw new ApiError(400, "Video id is missing");
   }
 
   await Video.findByIdAndDelete(videoId);
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "video deleted successfully", {}));
+    .json(new ApiResponse(200, "Video deleted successfully", {}));
 });
 
 const getVideoById = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
 
   if (!videoId) {
-    throw new ApiError(400, "video id is missing");
+    throw new ApiError(400, "Video id is missing");
   }
 
   const video = await Video.aggregate([
@@ -163,21 +163,21 @@ const getVideoById = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "video fetched successfully", video[0]));
+    .json(new ApiResponse(200, "Video fetched successfully", video[0]));
 });
 
 const updateVideo = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
 
   if (!videoId) {
-    throw new ApiError(400, "video id is missing");
+    throw new ApiError(400, "Video id is missing");
   }
 
   const { title, description } = req.body;
 
   const thumbnailLocalPath = req.file?.path;
   if (!title || !description) {
-    throw new ApiError(400, "all fields are required");
+    throw new ApiError(400, "All fields are required");
   }
 
   const thumbnail = await uploadOnCloudinary(thumbnailLocalPath);
@@ -196,21 +196,28 @@ const updateVideo = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "video updated successfully", updatedVideo));
+    .json(new ApiResponse(200, "Video updated successfully", updatedVideo));
 });
 
+// TODO: postman testing
 const togglePublishStatus = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
 
   if (!videoId) {
-    throw new ApiError(400, "video id is missing");
+    throw new ApiError(400, "Video id is missing");
   }
 
-  const video = await Video.findByIdAndUpdate(videoId, {
-    $set: {
-      isPublished: !video.isPublished,
+  const video = await Video.findByIdAndUpdate(
+    videoId,
+    {
+      $set: {
+        isPublished: !video.isPublished,
+      },
     },
-  });
+    {
+      new: true,
+    }
+  );
 
   return res.status(200).json(new ApiResponse(200, "video toggled", {}));
 });
