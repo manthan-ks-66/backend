@@ -1,6 +1,5 @@
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { User } from "../models/user.model.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import mongoose, { isValidObjectId } from "mongoose";
 import { Subscription } from "../models/subscription.model.js";
@@ -12,7 +11,7 @@ const toggleSubscription = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Invalid channel id");
   }
 
-  // un - subscribe if subscribed (delete the subscription document if found)
+  // Unsubscribe if subscribed (delete the subscription document if found)
   const subscription = await Subscription.findOneAndDelete({
     subscriber: req.user._id,
     channel: channelId,
@@ -58,7 +57,34 @@ const getUserChannelSubscribers = asyncHandler(async (req, res) => {
     );
 });
 
-export { toggleSubscription, getUserChannelSubscribers };
+// controller to return channel list to which user has subscribed
+const getSubscribedChannels = asyncHandler(async (req, res) => {
+  const { subscriberId } = req.params;
+
+  if (!isValidObjectId(subscriberId)) {
+    throw new ApiError(400, "Invalid subscriber id");
+  }
+
+  const subscriptionList = await Subscription.find({
+    subscriber: subscriberId,
+  }).populate("channel");
+
+  if (subscriptionList.length === 0) {
+    throw new ApiError(400, "No channels found");
+  }
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        "Subsribed channels fetched successfully",
+        subscriptionList
+      )
+    );
+});
+
+export { toggleSubscription, getUserChannelSubscribers, getSubscribedChannels };
 
 // this approach will also work for toggleSubscription (my own logic)
 
