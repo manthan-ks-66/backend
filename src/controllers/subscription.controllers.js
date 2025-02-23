@@ -42,7 +42,7 @@ const getUserChannelSubscribers = asyncHandler(async (req, res) => {
     channel: new mongoose.Types.ObjectId(channelId),
   }).populate("subscriber");
 
-  if (subscribersList.length === 0) {
+  if (subscribersList?.length === 0) {
     throw new ApiError(400, "No subscribers found");
   }
 
@@ -69,7 +69,7 @@ const getSubscribedChannels = asyncHandler(async (req, res) => {
     subscriber: subscriberId,
   }).populate("channel");
 
-  if (subscriptionList.length === 0) {
+  if (subscriptionList?.length === 0) {
     throw new ApiError(400, "No channels found");
   }
 
