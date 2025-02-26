@@ -2,7 +2,7 @@ import { Like } from "../models/likes.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
-import mongoose, { isValidObjectId } from "mongoose";
+import { isValidObjectId } from "mongoose";
 
 const toggleVideoLike = asyncHandler(async (req, res) => {
   // toggle like on video
@@ -92,11 +92,11 @@ const toggleTweetLike = asyncHandler(async (req, res) => {
 });
 
 const getLikedVideos = asyncHandler(async (req, res) => {
-  const likedVideos = await Like.findById({
+  const likedVideos = await Like.find({
     likedBy: req.user._id,
   }).populate("video");
 
-  if (likedVideos.length === 0) {
+  if (!likedVideos || likedVideos.length === 0) {
     throw new ApiError(400, "No liked videos found");
   }
 
