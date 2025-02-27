@@ -7,7 +7,7 @@ import {
   updateComment,
   getVideoComments,
   getUserAllComments,
-} from "../controllers/comments.controllers.js";
+} from "../controllers/comment.controllers.js";
 
 const router = Router();
 

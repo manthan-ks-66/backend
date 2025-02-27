@@ -5,11 +5,12 @@ import {
   toggleCommentLike,
   toggleTweetLike,
   getLikedVideos,
-} from "../controllers/likes.controllers.js";
+} from "../controllers/like.controllers.js";
 
 const router = Router();
 router.use(verifyJWT);
 
+// TODO: postman testing
 router.route("/:videoId/toggle-video-like").get(toggleVideoLike);
 
 router.route("/:commentId/toggle-comment-like").get(toggleCommentLike);
