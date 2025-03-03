@@ -36,11 +36,19 @@ npm run dev
 # Tech stack
 
 node js
+
 express js
+
 mongodb
+
 mongoose odm
+
 bcrypt
+
 dotenv
+
 jsonwebtoken
+
 cloudinary
+
 multer (for parsing form data and files)
