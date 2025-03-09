@@ -2,6 +2,26 @@
 
 this project is the backend of youtube
 
+# Tech stack
+
+node js
+
+express js
+
+mongodb
+
+mongoose odm
+
+bcrypt
+
+dotenv
+
+jsonwebtoken
+
+cloudinary
+
+multer (for parsing form data and files)
+
 # data model
 
 https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj
@@ -57,28 +77,4 @@ json response:
   "watchHistory": [],
   "refreshToken": "Json web token code"
 }
-```
-
-# Tech stack
-
-node js
-
-express js
-
-mongodb
-
-mongoose odm
-
-bcrypt
-
-dotenv
-
-jsonwebtoken
-
-cloudinary
-
-multer (for parsing form data and files)
-
-```
-
 ```
