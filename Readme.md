@@ -16,7 +16,7 @@ bcrypt
 
 dotenv
 
-jsonwebtoken
+jsonwebtoken (for authentication)
 
 cloudinary
 
@@ -58,7 +58,7 @@ npm run dev
 
 Users Route:
 
-base url: http:localhost:8080/api/v1/users
+base url: http:localhost:8080/api/v1
 
 Register user endpoint: /users/register
 
