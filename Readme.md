@@ -48,15 +48,16 @@ json response:
 
 ```json
 {
-    username: "registerd user's name",
-    email: "registered user's email",
-    fullName: "user's fullName",
-    avatar: "avatar cloudinary url",
-    coverImage: "coverImage cloudinary url",
-    password: "hashing code",
-    watchHistory: [],
-    refreshToken: "Json web token code"
+  "username": "registerd user's name",
+  "email": "registered user's email",
+  "fullName": "user's fullName",
+  "avatar": "avatar cloudinary url",
+  "coverImage": "coverImage cloudinary url",
+  "password": "hashing code",
+  "watchHistory": [],
+  "refreshToken": "Json web token code"
 }
+```
 
 # Tech stack
 
@@ -77,4 +78,7 @@ jsonwebtoken
 cloudinary
 
 multer (for parsing form data and files)
+
+```
+
 ```
