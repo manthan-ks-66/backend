@@ -44,7 +44,9 @@ Register user endpoint: /users/register
 
 required form data keys: username, email, password, avatar(file), fullName, coverImage(file)
 
-json response: 
+json response:
+
+```json
 {
     username: "registerd user's name",
     email: "registered user's email",
@@ -75,3 +77,4 @@ jsonwebtoken
 cloudinary
 
 multer (for parsing form data and files)
+```
