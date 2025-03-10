@@ -34,7 +34,7 @@ cd backend
 
 npm run dev
 
-# project description
+# project features
 
 Implemented user registration and user authentication using json web token
 and bcrypt
