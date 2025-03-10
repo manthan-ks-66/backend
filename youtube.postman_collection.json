@@ -1,0 +1,818 @@
+{
+	"info": {
+		"_postman_id": "62fd1210-70da-47dd-a9c9-ebfce6ae0d46",
+		"name": "youtube",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40944719"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "test user one",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "testuserone@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "fullName",
+									"value": "Test User One",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "test12345",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/C:/Users/manth/Downloads/photorealistic-earth-planet.jpg"
+								},
+								{
+									"key": "coverImage",
+									"type": "file",
+									"src": "/C:/Users/manth/Downloads/145857007_307ce493-b254-4b2d-8ba4-d12c080d6651.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/users/register?username=one&email=userone@gmail.com&fullName=User One&password=user@123&avatar",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"users",
+								"register"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "one"
+								},
+								{
+									"key": "email",
+									"value": "userone@gmail.com"
+								},
+								{
+									"key": "fullName",
+									"value": "User One"
+								},
+								{
+									"key": "password",
+									"value": "user@123"
+								},
+								{
+									"key": "avatar",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "register-user-response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "username",
+											"value": "test user one",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "testuserone@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "fullName",
+											"value": "Test User One",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "test12345",
+											"type": "text"
+										},
+										{
+											"key": "avatar",
+											"type": "file",
+											"src": "/C:/Users/manth/Downloads/photorealistic-earth-planet.jpg"
+										},
+										{
+											"key": "coverImage",
+											"type": "file",
+											"src": "/C:/Users/manth/Downloads/145857007_307ce493-b254-4b2d-8ba4-d12c080d6651.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{server}}/users/register?username=one&email=userone@gmail.com&fullName=User One&password=user@123&avatar",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"users",
+										"register"
+									],
+									"query": [
+										{
+											"key": "username",
+											"value": "one"
+										},
+										{
+											"key": "email",
+											"value": "userone@gmail.com"
+										},
+										{
+											"key": "fullName",
+											"value": "User One"
+										},
+										{
+											"key": "password",
+											"value": "user@123"
+										},
+										{
+											"key": "avatar",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "504"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1f8-G/RLQWehKjS87ij/YAjl7QUyiuA\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 10 Mar 2025 08:55:31 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": true,\n    \"success\": 200,\n    \"data\": {\n        \"_id\": \"67cea90237245cd05df187a7\",\n        \"username\": \"test user one\",\n        \"email\": \"testuserone@gmail.com\",\n        \"fullName\": \"Test User One\",\n        \"avatar\": \"http://res.cloudinary.com/dih3k6kyk/image/upload/v1741596929/uvsglxip1ucwxiqmm61d.jpg\",\n        \"coverImage\": \"http://res.cloudinary.com/dih3k6kyk/image/upload/v1741596932/lfxg7u856xr9xzizf7ym.jpg\",\n        \"watchHistory\": [],\n        \"createdAt\": \"2025-03-10T08:55:30.884Z\",\n        \"updatedAt\": \"2025-03-10T08:55:30.884Z\",\n        \"__v\": 0\n    },\n    \"message\": \"User registered successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "videoFile",
+									"type": "file",
+									"src": "/C:/Users/manth/Downloads/video.mp4"
+								},
+								{
+									"key": "thumbnail",
+									"type": "file",
+									"src": "/C:/Users/manth/OneDrive/Pictures/attractive-green-leaf-dark-background.jpg"
+								},
+								{
+									"key": "title",
+									"value": "test title ",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "testing video upload",
+									"type": "text"
+								},
+								{
+									"key": "duration",
+									"value": "10",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/videos/upload",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"videos",
+								"upload"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"manthanks\",\r\n    \"password\": \"mks662003\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}/users/login",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzg2YTRjZTY4ZTZkYmIwMTcwN2I0ZmMiLCJlbWFpbCI6Im1hbnRoYW5rcy4wNjA2QGdtYWlsLmNvbSIsInVzZXJuYW1lIjoibWFudGhhbmtzIiwiZnVsbE5hbWUiOiJNYW50aGFuIFNyaXZhc3RhdmEiLCJpYXQiOjE3Mzc0NjU2ODEsImV4cCI6MTczNzU1MjA4MX0.XADYccCxa6bM6U-fNnGN827L3r-Kol6w2-Rf8mx1fQY; Path=/; HttpOnly; Secure"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzg2YTRjZTY4ZTZkYmIwMTcwN2I0ZmMiLCJpYXQiOjE3Mzc0NjU2ODEsImV4cCI6MTczODMyOTY4MX0.53pdslE_oYGkOeRQngA4Pkc2vwOaNzIgwFGAXzyJDiU; Path=/; HttpOnly; Secure"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "930"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3a2-knNaBYDHlCRlFG+0SSLnVmDgDU4\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Jan 2025 13:21:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": true,\n    \"success\": 200,\n    \"data\": \"user logged in successfully\",\n    \"message\": {\n        \"user\": {\n            \"_id\": \"6786a4ce68e6dbb01707b4fc\",\n            \"username\": \"manthanks\",\n            \"email\": \"manthanks.0606@gmail.com\",\n            \"fullName\": \"Manthan Srivastava\",\n            \"avatar\": \"http://res.cloudinary.com/dih3k6kyk/image/upload/v1736877261/w9pq9d8uu71vris9ewfp.jpg\",\n            \"coverImage\": \"\",\n            \"watchHistory\": [],\n            \"createdAt\": \"2025-01-14T17:54:22.477Z\",\n            \"updatedAt\": \"2025-01-21T13:21:21.549Z\",\n            \"__v\": 0\n        },\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzg2YTRjZTY4ZTZkYmIwMTcwN2I0ZmMiLCJlbWFpbCI6Im1hbnRoYW5rcy4wNjA2QGdtYWlsLmNvbSIsInVzZXJuYW1lIjoibWFudGhhbmtzIiwiZnVsbE5hbWUiOiJNYW50aGFuIFNyaXZhc3RhdmEiLCJpYXQiOjE3Mzc0NjU2ODEsImV4cCI6MTczNzU1MjA4MX0.XADYccCxa6bM6U-fNnGN827L3r-Kol6w2-Rf8mx1fQY\",\n        \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzg2YTRjZTY4ZTZkYmIwMTcwN2I0ZmMiLCJpYXQiOjE3Mzc0NjU2ODEsImV4cCI6MTczODMyOTY4MX0.53pdslE_oYGkOeRQngA4Pkc2vwOaNzIgwFGAXzyJDiU\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/users/logout",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"users",
+								"logout"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{server}}/users/logout",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"users",
+										"logout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "accessToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Secure"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "refreshToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Secure"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "71"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"47-KkcSjewLpmtajA4fEqdEW6caiMs\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Jan 2025 13:23:03 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": true,\n    \"success\": 200,\n    \"data\": \"user logged out\",\n    \"message\": {}\n}"
+						}
+					]
+				},
+				{
+					"name": "update-account",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"manthan_ks\",\r\n    \"email\": \"manthan-ks@gmail.com\",\r\n    \"fullName\": \"Manthan\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/users/update-account",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"users",
+								"update-account"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"manthanks\",\r\n    \"password\": \"mks662003\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}/users/login",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzg2YTRjZTY4ZTZkYmIwMTcwN2I0ZmMiLCJlbWFpbCI6Im1hbnRoYW5rcy4wNjA2QGdtYWlsLmNvbSIsInVzZXJuYW1lIjoibWFudGhhbmtzIiwiZnVsbE5hbWUiOiJNYW50aGFuIFNyaXZhc3RhdmEiLCJpYXQiOjE3Mzc0NjU2ODEsImV4cCI6MTczNzU1MjA4MX0.XADYccCxa6bM6U-fNnGN827L3r-Kol6w2-Rf8mx1fQY; Path=/; HttpOnly; Secure"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzg2YTRjZTY4ZTZkYmIwMTcwN2I0ZmMiLCJpYXQiOjE3Mzc0NjU2ODEsImV4cCI6MTczODMyOTY4MX0.53pdslE_oYGkOeRQngA4Pkc2vwOaNzIgwFGAXzyJDiU; Path=/; HttpOnly; Secure"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "930"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3a2-knNaBYDHlCRlFG+0SSLnVmDgDU4\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Jan 2025 13:21:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": true,\n    \"success\": 200,\n    \"data\": \"user logged in successfully\",\n    \"message\": {\n        \"user\": {\n            \"_id\": \"6786a4ce68e6dbb01707b4fc\",\n            \"username\": \"manthanks\",\n            \"email\": \"manthanks.0606@gmail.com\",\n            \"fullName\": \"Manthan Srivastava\",\n            \"avatar\": \"http://res.cloudinary.com/dih3k6kyk/image/upload/v1736877261/w9pq9d8uu71vris9ewfp.jpg\",\n            \"coverImage\": \"\",\n            \"watchHistory\": [],\n            \"createdAt\": \"2025-01-14T17:54:22.477Z\",\n            \"updatedAt\": \"2025-01-21T13:21:21.549Z\",\n            \"__v\": 0\n        },\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzg2YTRjZTY4ZTZkYmIwMTcwN2I0ZmMiLCJlbWFpbCI6Im1hbnRoYW5rcy4wNjA2QGdtYWlsLmNvbSIsInVzZXJuYW1lIjoibWFudGhhbmtzIiwiZnVsbE5hbWUiOiJNYW50aGFuIFNyaXZhc3RhdmEiLCJpYXQiOjE3Mzc0NjU2ODEsImV4cCI6MTczNzU1MjA4MX0.XADYccCxa6bM6U-fNnGN827L3r-Kol6w2-Rf8mx1fQY\",\n        \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzg2YTRjZTY4ZTZkYmIwMTcwN2I0ZmMiLCJpYXQiOjE3Mzc0NjU2ODEsImV4cCI6MTczODMyOTY4MX0.53pdslE_oYGkOeRQngA4Pkc2vwOaNzIgwFGAXzyJDiU\"\n    }\n}"
+						},
+						{
+							"name": "login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"manthan_ks\",\r\n    \"email\": \"manthan-ks@gmail.com\",\r\n    \"fullName\": \"Manthan\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}/users/change-account-details",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"users",
+										"change-account-details"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "604"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"25c-PFKWjcxzEfdBHI46jU9rp0UvXkE\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 25 Jan 2025 13:31:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": true,\n    \"success\": 200,\n    \"data\": {\n        \"_id\": \"6786a4ce68e6dbb01707b4fc\",\n        \"username\": \"manthan_ks\",\n        \"email\": \"manthan-ks@gmail.com\",\n        \"fullName\": \"Manthan\",\n        \"avatar\": \"http://res.cloudinary.com/dih3k6kyk/image/upload/v1737808137/x3jw0pdrgmjuxpab0mg1.jpg\",\n        \"coverImage\": \"\",\n        \"watchHistory\": [],\n        \"createdAt\": \"2025-01-14T17:54:22.477Z\",\n        \"updatedAt\": \"2025-01-25T13:31:25.862Z\",\n        \"__v\": 0,\n        \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzg2YTRjZTY4ZTZkYmIwMTcwN2I0ZmMiLCJpYXQiOjE3Mzc4MDU0MTEsImV4cCI6MTczODY2OTQxMX0.p-wXHZ2eOVi-cd2izul5-5QKceKIfUGEDqx9kUV_pzA\"\n    },\n    \"message\": \"user details updated successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "change-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"oldPassword\": \"mks662003\",\r\n   \"newPassword\": \"Mks662003\",\r\n   \"confPassword\": \"Mks662003\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/users/change-password",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"users",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "video-upload",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "videoFile",
+									"type": "file",
+									"src": "/C:/Users/manth/Downloads/video.mp4"
+								},
+								{
+									"key": "thumbnail",
+									"type": "file",
+									"src": "/C:/Users/manth/OneDrive/Pictures/peakpx (3).jpg"
+								},
+								{
+									"key": "title",
+									"value": "Youtube video",
+									"type": "text"
+								},
+								{
+									"key": "description ",
+									"value": "test video upload",
+									"type": "text"
+								},
+								{
+									"key": "duration",
+									"value": "10",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/videos/upload",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"videos",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-video-by-id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/videos/67a5f0f75dae6eaf19135442",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"videos",
+								"67a5f0f75dae6eaf19135442"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "{{server}}/videos/67a5f0f75dae6eaf19135442",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{server}}/videos/67a5f0f75dae6eaf19135442",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"videos",
+										"67a5f0f75dae6eaf19135442"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "732"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2dc-Vr9MeFDmqXZ8j5+Tn9d51f4ETJw\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 11 Feb 2025 10:21:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": true,\n    \"success\": 200,\n    \"data\": {\n        \"_id\": \"67a5f0f75dae6eaf19135442\",\n        \"videoFile\": \"http://res.cloudinary.com/dih3k6kyk/video/upload/v1738928369/wly3g0ztcldief8gv7tt.mp4\",\n        \"thumbnail\": \"http://res.cloudinary.com/dih3k6kyk/image/upload/v1738928375/eq1akl9cuccs3exbyspf.jpg\",\n        \"owner\": \"6786a4ce68e6dbb01707b4fc\",\n        \"title\": \"test title \",\n        \"description\": \"testing video upload\",\n        \"duration\": \"00:10\",\n        \"views\": 0,\n        \"isPublished\": true,\n        \"createdAt\": \"2025-02-07T11:39:35.282Z\",\n        \"updatedAt\": \"2025-02-07T11:39:35.282Z\",\n        \"__v\": 0,\n        \"videoOwner\": {\n            \"_id\": \"6786a4ce68e6dbb01707b4fc\",\n            \"username\": \"manthan_ks\",\n            \"fullName\": \"Manthan\",\n            \"avatar\": \"http://res.cloudinary.com/dih3k6kyk/image/upload/v1737808137/x3jw0pdrgmjuxpab0mg1.jpg\"\n        }\n    },\n    \"message\": \"video fetched successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "upload-video",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "new test case 2",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "new sample test case desc",
+									"type": "text"
+								},
+								{
+									"key": "thumbnail",
+									"type": "file",
+									"src": "/C:/Users/manth/OneDrive/Pictures/Manthan.jpg",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/videos/update/67ab7a016c22fbcca839331d",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"videos",
+								"update",
+								"67ab7a016c22fbcca839331d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "video",
+			"item": [
+				{
+					"name": "upload-video",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

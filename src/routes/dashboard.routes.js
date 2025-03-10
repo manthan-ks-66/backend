@@ -7,3 +7,5 @@ import {
 
 const router = Router();
 router.use(verifyJWT);
+
+export default router;

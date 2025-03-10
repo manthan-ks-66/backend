@@ -3,7 +3,7 @@ import { verifyJWT } from "../middlewares/auth.middleware.js";
 import {
   getSubscribedChannels,
   getUserChannelSubscribers,
-  getUserChannelSubscribers,
+  toggleSubscription,
 } from "../controllers/subscription.controllers.js";
 
 const router = Router();
@@ -11,7 +11,7 @@ const router = Router();
 router.use(verifyJWT);
 
 // TODO: postman testing
-router.route("/:channelId/toggle-subscription").get(getUserChannelSubscribers);
+router.route("/:channelId/toggle-subscription").get(toggleSubscription);
 
 router
   .route("/:channelId/channel-subscribers-list")
