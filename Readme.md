@@ -2,26 +2,6 @@
 
 this project is the backend of youtube
 
-# Tech stack
-
-node js
-
-express js
-
-mongodb
-
-mongoose odm
-
-bcrypt
-
-dotenv
-
-jsonwebtoken (for authentication)
-
-cloudinary
-
-multer (for parsing form data and files)
-
 # data model
 
 https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj
@@ -56,13 +36,13 @@ npm run dev
 
 # project demonstation
 
-Users Route:
+# Users Route:
 
 base url: http:localhost:8080/api/v1
 
 Register user endpoint: /users/register
 
-required form data keys: username, email, password, avatar(file), fullName, coverImage(file)
+required form data: username, email, password, avatar(file), fullName, coverImage(file)
 
 json response:
 
@@ -73,8 +53,29 @@ json response:
   "fullName": "user's fullName",
   "avatar": "avatar cloudinary url",
   "coverImage": "coverImage cloudinary url",
-  "password": "hashing code",
-  "watchHistory": [],
-  "refreshToken": "Json web token code"
+  "watchHistory": []
+}
+```
+
+base url: http:localhost:8080/api/v1
+
+login user endpoint: /users/login
+
+required json data: username, password
+
+json response:
+
+```json
+{
+  "user": {
+    "username": "registerd user's name",
+    "email": "registered user's email",
+    "fullName": "user's fullName",
+    "avatar": "avatar cloudinary url",
+    "coverImage": "coverImage cloudinary url",
+    "watchHistory": []
+  },
+  "accessToken": "user's access token",
+  "refreshToken": "user's referesh token"
 }
 ```
