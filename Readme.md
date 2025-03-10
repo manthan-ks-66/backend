@@ -34,6 +34,22 @@ cd backend
 
 npm run dev
 
+# project description
+
+Implemented user registration and user authentication using json web token
+and bcrypt
+
+Implemented MongoDB queries and aggregation pipeline for handling user
+requests
+
+Implemented CRUD operations on users, comments, playlists, likes,
+subscriptions, videos
+
+Implemented middleware validation for login and error handling for a better
+API response
+
+Tested API using postman, validating request-response and error handling
+
 # project demonstation
 
 # Users Route:
