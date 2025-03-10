@@ -28,11 +28,7 @@ this is the data model which I have used for implementing this backend project
 
 --> utils/ # ApiResponse class for sending json response, ApiError class for error handling, asyncHandler a higher order function that wraps up the controller method to handle errors when interacting with database and cloudinary method for uploading files on cloudinary
 
-# run project
-
-cd backend
-
-npm run dev
+Note: This project requires a configured environment variables with MongoDB atlas database access, API keys, and other credentials. Due to restricted access, it cannot be run directly.
 
 # project features
 
