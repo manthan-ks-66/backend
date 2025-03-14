@@ -91,3 +91,23 @@ json response:
   "refreshToken": "user's referesh token"
 }
 ```
+
+# Video Routes
+
+uplaod video endpoint: /vidoes/upload
+
+required form data: videoFile, title, description, thumbnail (file)
+
+json response:
+
+```json
+{
+  "videoFile": "cloudinary video url",
+  "title": "Video title",
+  "description": "video description",
+  "thumbnail": "cloudinary url",
+  "duration": "mm:ss",
+  "vides": 0,
+  "isPublished": true
+}
+```

@@ -36,6 +36,7 @@ router
   .patch(verifyJWT, upload.single("thumbnail"), updateVideo);
 
 router.route("/toggle-publish/:videoId").patch(verifyJWT, togglePublishStatus);
+
 router.route("/get-all-videos").post(getAllVideos);
 
 export default router;
