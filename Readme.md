@@ -107,7 +107,7 @@ json response:
   "description": "video description",
   "thumbnail": "cloudinary url",
   "duration": "mm:ss",
-  "vides": 0,
+  "views": 0,
   "isPublished": true
 }
 ```
