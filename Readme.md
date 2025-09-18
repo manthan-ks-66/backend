@@ -1,38 +1,37 @@
 # backend project
 
-this project is the backend of youtube
+The project is the backend of YouTube platform
 
 # data model
 
 https://app.eraser.io/workspace/YtPqZ1VogxGy1jzIDkzj
 
-this is the data model which I have used for implementing this backend project
+This is the data model used for implementing the project
 
 # project strucure
 
 /src
 
---> db/ # mongodb connection
+--> db -> mongodb connection
 
---> controllers/ # Business logic for API endpoints
+--> controllers -> Business logic for API endpoints
 
---> models/ # Mongoose schemas and database models
+--> models -> Mongoose schemas and database models
 
---> routes/ # Express routes for API endpoints
+--> routes -> Express routes for API endpoints
 
---> middlewares/ # JWT auth, error handling, validation and multer upload
+--> middlewares -> JWT auth, error handling, validation and multer upload
 
---> index.js # Entry point of the application
+--> index.js -> Entry point of the application
 
---> public/ # stores the file temporarily on server when file uplaoding occurs
+--> public -> stores the file temporarily on the server when file uploading occurs
 
---> utils/ # ApiResponse class for sending json response, ApiError class for error handling, asyncHandler a higher order function that wraps up the controller method to handle errors when interacting with database and cloudinary method for uploading files on cloudinary
+--> utils -> ApiResponse class for sending JSON response, ApiError class for error handling, asyncHandler a higher order function that wraps up the controller method to handle errors when interacting with the database and the cloudinary method for uploading files on Cloudinary
 
-Note: This project requires a configured environment variables with MongoDB atlas database access, API keys, and other credentials. Due to restricted access, it cannot be run directly.
 
 # project features
 
-Implemented user registration and user authentication using json web token
+Implemented user registration and user authentication using JSON Web Token
 and bcrypt
 
 Implemented MongoDB queries and aggregation pipeline for handling user
@@ -46,7 +45,7 @@ API response
 
 Tested API using postman, validating request-response and error handling
 
-# project demonstation
+# project demonstration
 
 # Users Route:
 
@@ -60,7 +59,7 @@ json response:
 
 ```json
 {
-  "username": "registerd user's name",
+  "username": "registered user's name",
   "email": "registered user's email",
   "fullName": "user's fullName",
   "avatar": "avatar cloudinary url",
@@ -80,7 +79,7 @@ json response:
 ```json
 {
   "user": {
-    "username": "registerd user's name",
+    "username": "registered user's name",
     "email": "registered user's email",
     "fullName": "user's fullName",
     "avatar": "avatar cloudinary url",
@@ -88,13 +87,13 @@ json response:
     "watchHistory": []
   },
   "accessToken": "user's access token",
-  "refreshToken": "user's referesh token"
+  "refreshToken": "user's refresh token"
 }
 ```
 
 # Video Routes
 
-uplaod video endpoint: /vidoes/upload
+upload video endpoint: /videos/upload
 
 required form data: videoFile, title, description, thumbnail (file)
 
