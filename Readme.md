@@ -12,21 +12,21 @@ This is the data model used for implementing the project
 
 /src
 
---> db -> mongodb connection
+db -> mongodb connection
 
---> controllers -> Business logic for API endpoints
+controllers -> Business logic for API endpoints
 
---> models -> Mongoose schemas and database models
+models -> Mongoose schemas and database models
 
---> routes -> Express routes for API endpoints
+routes -> Express routes for API endpoints
 
---> middlewares -> JWT auth, error handling, validation and multer upload
+middlewares -> JWT auth, error handling, validation and multer upload
 
---> index.js -> Entry point of the application
+index.js -> Entry point of the application
 
---> public -> stores the file temporarily on the server when file uploading occurs
+public -> stores the file temporarily on the server when file uploading occurs
 
---> utils -> ApiResponse class for sending JSON response, ApiError class for error handling, asyncHandler a higher order function that wraps up the controller method to handle errors when interacting with the database and the cloudinary method for uploading files on Cloudinary
+utils -> ApiResponse class for sending JSON response, ApiError class for error handling, asyncHandler a higher order function that wraps up the controller method to handle errors when interacting with the database and the cloudinary method for uploading files on Cloudinary
 
 
 # project features
